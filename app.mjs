@@ -3,7 +3,6 @@ import session from 'express-session';
 import bodyParser from 'body-parser';
 import cookieParser from 'cookie-parser';
 import { inspect } from 'util';
-import config from './config/local.mjs';
 import db from './db.mjs';
 import registerSpotRoute from './routes/spot.mjs';
 
@@ -25,9 +24,9 @@ app.use((req, res, next) => {
   db.connect();
   registerSpotRoute('/spot', app);
 
-  const { address, port } = config;
-  app.listen(port, () => {
-    console.log(`Listening from ${address}:${port}`);
+  const { listeningUri, listeningPort } = process.env;
+  app.listen(listeningPort, () => {
+    console.log(`Listening from ${listeningUri}:${listeningPort}`);
   });
 
 })().catch(err => {

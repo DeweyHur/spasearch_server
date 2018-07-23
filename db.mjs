@@ -1,10 +1,10 @@
-import config from './config/local.mjs';
 import mongodb from 'mongodb';
 const MongoClient = mongodb.MongoClient;
 
 class DB {
     async connect() {
-        const connection = `mongodb+srv://${config.mongodb.username}:${config.mongodb.password}@cluster0-zcgfb.gcp.mongodb.net/test?retryWrites=true`;
+        const { mongoUser, mongoPass } = process.env;
+        const connection = `mongodb+srv://${mongoUser}:${mongoPass}@cluster0-zcgfb.gcp.mongodb.net/test?retryWrites=true`;
         console.log(`Connecting to DB.. ${connection}`);
 
         this.client = await MongoClient.connect(connection, { useNewUrlParser: true });
