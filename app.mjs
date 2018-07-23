@@ -24,8 +24,8 @@ app.use((req, res, next) => {
   db.connect();
   registerSpotRoute('/spot', app);
 
-  const { listeningUri, listeningPort } = process.env;
-  app.listen(listeningPort, () => {
+  const { listeningUri, PORT = 14141 } = process.env;
+  app.listen(PORT, () => {
     console.log(`Listening from ${listeningUri}:${listeningPort}`);
   });
 
