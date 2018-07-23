@@ -1,0 +1,28 @@
+{
+  "name": "spasearch_server",
+  "description": "",
+  "scripts": {
+  },
+  "env": {
+    "listeningPort": {
+      "required": true
+    },
+    "listeningUri": {
+      "required": true
+    },
+    "MongoPass": {
+      "required": true
+    },
+    "MongoUser": {
+      "required": true
+    }
+  },
+  "formation": {
+  },
+  "addons": [
+
+  ],
+  "buildpacks": [
+
+  ]
+}
