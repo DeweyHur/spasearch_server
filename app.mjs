@@ -25,7 +25,7 @@ app.use((req, res, next) => {
 
   const { listeningUri, PORT = 14141 } = process.env;
   app.listen(PORT, () => {
-    console.log(`Listening from ${listeningUri}:${listeningPort}`);
+    console.log(`Listening from ${listeningUri}:${PORT}`);
   });
 
 })().catch(err => {
