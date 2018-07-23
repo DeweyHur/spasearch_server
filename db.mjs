@@ -14,13 +14,15 @@ class DB {
 
     async searchSpot(type) {
         try {
-            const result = await this.db.collection('service').aggregate([{
-                $match: { type },
-                $group: { _id: "$_spot", services: { $push: "$$ROOT" } },
-                $lookup: { from: 'spot', localField: '_id', foreignField: '_id', as: 'spot' },
-                $replaceRoot: { newRoot: { $mergeObjects: [{ $arrayElemAt: ["$spot", 0] }, "$$ROOT"] } },
-                $project: { spot: 0, _id: 0, "services._id": 0, "services._spot": 0, "services.type": 0 }
-            }]);
+            const result = await this.db.collection('service').aggregate([
+                { $match: { type } },
+                { $group: { _id: "$_spot", services: { $push: "$$ROOT" } } },
+                { $lookup: { from: 'spot', localField: '_id', foreignField: '_id', as: 'spot' } },
+                { $replaceRoot: { newRoot: { $mergeObjects: [{ $arrayElemAt: ["$spot", 0] }, "$$ROOT"] } } },
+                { $project: { spot: 0, _id: 0, "services._id": 0, "services._spot": 0, "services.type": 0 } }
+            ]);
+            return result.toArray();
+
         } catch (e) {
             console.err(e);
         }
