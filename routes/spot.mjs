@@ -15,6 +15,21 @@ const routers = {
                 console.log('Success', spots);
                 return res.send(spots).status(200);
                 
+            } catch (e) {
+                return resError(res, 500, e, type);
+            }
+        })
+    },
+    "/:id": {
+        "get": (async (req, res) => {
+            const _id = _.get(req, 'params.id');
+            if (!_id) {
+                return resError(res, 400, 'id is missing.');
+            }
+            try {
+                const spot = await db.getSpot(_id);
+                console.log('Success', spot);
+                return res.send(spot).status(200);
 
             } catch (e) {
                 return resError(res, 500, e, type);
