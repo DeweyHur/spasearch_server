@@ -2,8 +2,6 @@ import express from 'express';
 import session from 'express-session';
 import bodyParser from 'body-parser';
 import cookieParser from 'cookie-parser';
-import { inspect } from 'util';
-import config from './config/local.mjs';
 import db from './db.mjs';
 import registerSpotRoute from './routes/spot.mjs';
 
@@ -17,7 +15,7 @@ app.use(session({
 }));
 app.use(cookieParser());
 app.use((req, res, next) => {
-  console.log(`${req.method} ${req.url} ${inspect(req.body, { colors: true }).replace(/\n/g, '')}`);
+  console.log(`${req.method} ${req.url} ${JSON.stringify(req.body)}`);
   next(null, req, res);
 });
 
@@ -25,9 +23,9 @@ app.use((req, res, next) => {
   db.connect();
   registerSpotRoute('/spot', app);
 
-  const { address, port } = config;
-  app.listen(port, () => {
-    console.log(`Listening from ${address}:${port}`);
+  const { listeningUri, PORT = 14141 } = process.env;
+  app.listen(PORT, () => {
+    console.log(`Listening from ${listeningUri}:${PORT}`);
   });
 
 })().catch(err => {

@@ -12,6 +12,7 @@
         "util": "^0.11.0"
     },
     "scripts": {
-        "server": "node --experimental-modules --inspect app.mjs"
+        "server": "node --experimental-modules app.mjs", 
+        "debug": "node --experimental-modules --inspect app.mjs"
     }
 }
